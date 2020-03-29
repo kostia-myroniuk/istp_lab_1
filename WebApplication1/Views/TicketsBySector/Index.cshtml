@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebApplication1.Tickets>
+
+@{
+    ViewData["Title"] = "Квитки за сектором";
+}
+
+<h1>Квитки за сектором: @ViewBag.SectorName</h1>
+
+<p>
+    @Html.ActionLink("Додати квиток", "Create", new { sectorId = @ViewBag.SectorId })
+</p>    
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Sector.Name)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Name)
+            </td>
+            <td>
+                @*<a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |*@
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model WebApplication1.Cities
+
+@{
+    ViewData["Title"] = "Додати місто";
+}
+
+<h1>Додати місто</h1>
+
+@*<h4>Cities</h4>*@
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <input type="hidden" value="@ViewBag.CountryId" name="CountryId" />
+            @*<div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <select asp-for="CountryId" class ="form-control" asp-items="ViewBag.CountryId"></select>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Додати" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Countries" asp-action="Index" >Повернутись</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
