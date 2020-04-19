@@ -1,2 +1,2 @@
-# WebApplication1
+# ІСтаТП Лаб.1
  
