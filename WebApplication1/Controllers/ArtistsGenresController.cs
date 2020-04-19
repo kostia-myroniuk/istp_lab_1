@@ -19,9 +19,16 @@ namespace WebApplication1.Controllers
         }
 
         // GET: ArtistsGenres
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var concertsContext = _context.ArtistsGenres.Include(a => a.Artist).Include(a => a.Genre);
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Artists");
+            }
+
+            var concertsContext = _context.ArtistsGenres.Where(ag => ag.ArtistId == id).Include(a => a.Artist).Include(a => a.Genre);
+            ViewBag.ArtistId = id;
+            ViewBag.ArtistName = _context.Artists.Where(a => a.Id == id).FirstOrDefault().Name;
             return View(await concertsContext.ToListAsync());
         }
 
@@ -46,10 +53,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: ArtistsGenres/Create
-        public IActionResult Create()
+        public IActionResult Create(int artistId)
         {
-            ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Name");
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+            ViewBag.ArtistId = artistId;
+            ViewBag.ArtistName = _context.Artists.Where(a => a.Id == artistId).FirstOrDefault().Name;
             return View();
         }
 
@@ -58,17 +66,19 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ArtistId,GenreId")] ArtistsGenres artistsGenres)
+        public async Task<IActionResult> Create(int artistId, [Bind("Id,GenreId")] ArtistsGenres artistsGenres)
         {
-            if (ModelState.IsValid)
+            artistsGenres.ArtistId = artistId;
+            if (ModelState.IsValid && !_context.ArtistsGenres.Any(ag => ag.GenreId == artistsGenres.GenreId && ag.ArtistId == artistId))
             {
                 _context.Add(artistsGenres);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "ArtistsGenres", new { id = artistId, name = _context.Artists.Where(a => a.Id == artistId).FirstOrDefault().Name });
             }
-            ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Name", artistsGenres.ArtistId);
+            //ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Name", artistsGenres.ArtistId);
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", artistsGenres.GenreId);
-            return View(artistsGenres);
+            return RedirectToAction("Index", "ArtistsGenres", new { id = artistId, name = _context.Artists.Where(a => a.Id == artistId).FirstOrDefault().Name });
+            //return View(artistsGenres);
         }
 
         // GET: ArtistsGenres/Edit/5
@@ -149,12 +159,12 @@ namespace WebApplication1.Controllers
         // POST: ArtistsGenres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int artistId)
         {
             var artistsGenres = await _context.ArtistsGenres.FindAsync(id);
             _context.ArtistsGenres.Remove(artistsGenres);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { id = artistId });
         }
 
         private bool ArtistsGenresExists(int id)

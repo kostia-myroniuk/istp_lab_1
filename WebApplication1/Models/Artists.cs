@@ -14,14 +14,14 @@ namespace WebApplication1
 
         public int Id { get; set; }
         [Required(ErrorMessage ="Поле не повинно бути порожнім")]
-        [Display(Name = "Ім'я")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
-        [Display(Name = "Опис")]
+        [Display(Name = "Info")]
         public string Description { get; set; }
-        [Display(Name = "Країна")]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
-        [Display(Name = "Країна")]
+        [Display(Name = "Country")]
         public virtual Countries Country { get; set; }
         public virtual ICollection<ArtistsGenres> ArtistsGenres { get; set; }
         public virtual ICollection<ConcertsArtists> ConcertsArtists { get; set; }

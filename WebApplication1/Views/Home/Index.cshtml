@@ -1,8 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Головна";
+    ViewData["Title"] = "Лабораторна робота з ІСтаТП 2020. Бібліотека";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Агрегатор концертів</h1>
-    <p>Тут можна купити квиток да</p>
+<header>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <!-- Slide One - Set the background image for this slide in the line below -->
+        <div class="carousel-item active" style="background-image: url('https://static.zerochan.net/K-ON%21.full.504531.jpg')">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4"></h2>
+                <p class="lead"></p>
+            </div>
+        </div>
+        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('https://cdn.vysokeskoly.cz/czech-universities/uploads/2020/01/3380.jpg')">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4"></h2>
+                <p class="lead"></p>
+            </div>
+        </div>
+        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('http://yt3.ggpht.com/WvYuwHEQAmPeH39OKZV1IGDpzflKsSXtr_l6U0Ri-pIQK2wPCjqtzo7BSqNLn-wp6niuZtvc8Ao')">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4"></h2>
+                <p class="lead"></p>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
+    </header>
+
+<style>
+    .carousel-item {
+  height: 50vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
+
+

@@ -12,13 +12,13 @@ namespace WebApplication1
         }
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-        [Display(Name = "Назва")]
+        [Required(ErrorMessage = "Field can't be empty")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
-        [Display(Name = "Країна")]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
-        [Display(Name = "Країна")]
+        [Display(Name = "Country")]
         public virtual Countries Country { get; set; }
         public virtual ICollection<Locations> Locations { get; set; }
     }

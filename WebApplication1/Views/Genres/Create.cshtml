@@ -1,13 +1,12 @@
 ﻿@model WebApplication1.Genres
 
 @{
-    ViewData["Title"] = "Додати жанр";
+    ViewData["Title"] = "Add genre";
 }
 
-<h1>Додати жанр</h1>
-
-@*<h4>Genres</h4>*@
+<h3>Add genre</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -18,14 +17,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Go back</a>
+
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Повернутись</a>
 </div>
 
 @section Scripts {

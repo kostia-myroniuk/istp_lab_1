@@ -1,60 +1,106 @@
 ﻿@model IEnumerable<WebApplication1.Concerts>
 
 @{
-    ViewData["Title"] = "Концерти";
+    ViewData["Title"] = "Concerts";
 }
 
-<h1>Концерти</h1>
-<p>
-    <a asp-action="Create">Додати концерт</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location.Name)
-                </td>
-                <td>
-                    <a style="font-weight: bold;" asp-action="Details" asp-route-id="@item.Id">Виконавці</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
-                </td>
-            </tr>
+<h1>Concerts</h1>
+<hr />
+<p><a asp-action="Create" class="btn btn-success">Add concert</a></p>
+
+@{
+    var lcnt = 0;
+}
+
+@foreach (var item in Model)
+{
+    @if (lcnt == 0)
+    {
+        @:<div class="card-deck mb-3">
         }
-    </tbody>
-</table>
+
+    <div class="card border-primary">
+        <img class="card-img-top" src="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/3/2017/01/03145133/twenty20_ec812a3a-48ad-40af-983b-129484cf6086.jpg" alt="Card image cap">
+        <div class="card-body d-flex flex-column">
+            <p class="card-text">@item.Date.ToLongDateString() <span class="float-right">@item.Date.ToShortTimeString()</span></p>
+            <h4 style="font-weight: bold;" class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
+            @if (item.ConcertsArtists.Count > 0)
+            {
+                <p class="card-text">Line-up:</p>
+                <ul>
+                    @foreach (ConcertsArtists ca in item.ConcertsArtists)
+                    {
+                        <li>@ca.Artist.Name</li>
+                    }
+                </ul>
+            }
+
+            <p class="card-text">@item.Location.City.Name,  @item.Location.Name</p>
+
+            @if (!String.IsNullOrWhiteSpace(item.Description))
+            {
+                <p class="card-text text-justify"><span style="font-weight: bold;" class="mr-2">About concert:</span>@Html.DisplayFor(modelItem => item.Description)</p>
+            }
+
+            <div class="mt-auto">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Line-up</a>
+                <a asp-controller="Sectors" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-info">Tickets</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+
+    </div>
+
+    @if (lcnt == 2)
+    {
+    @:</div>
+}
+    lcnt++;
+    @if (lcnt == 3)
+    {
+        lcnt = 0;
+    }
+}
+
+@if (lcnt == 1)
+{
+    @:<div class="card"></div>
+    @:<div class="card"></div>
+    @:</div>
+}
+
+@if (lcnt == 2)
+{
+    @:<div class="card"></div>
+    @:</div>
+}
 
 <br>
+<h3>Charts</h3>
 
-<div>
-    <h3>Звіт (Word)</h3>
-    <a asp-controller="Artists" asp-action="MakeReport">Завантажити</a>
+<div class="container">
+    <div id="chart2"></div>
 </div>
+
+@section scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            $.get('/api/Charts/JsonData2', function (jsonData) {
+                data = google.visualization.arrayToDataTable(jsonData, false);
+                var option = {
+                    title: "Ticket price",
+                    width: 850,
+                    height: 500
+                };
+                chart = new google.visualization.BarChart(document.getElementById('chart2'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}

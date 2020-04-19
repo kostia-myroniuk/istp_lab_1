@@ -4,71 +4,54 @@
     ViewData["Title"] = "Квитки (сектори)";
 }
 
-<h1>Квитки (сектори)</h1>
+<h1>Tickets</h1>
+<hr/>
 
-<p>
-    <a asp-action="Create">Додати сектор</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Concert)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<p><a asp-action="Create" class="btn btn-success">Add ticket</a></p>
+
+@{
+    Sectors prevSector = null;
+}
+
+@foreach (var item in Model)
+{
+    if (prevSector == null || prevSector.ConcertId != item.ConcertId)
+    {
+        if (prevSector != null)
         {
+            @:</tbody>
+            @:</table>
+        }
+        @*<h4 id="concert-@item.Concert.Id">@item.Concert.Name</h4>*@
+        @:<table class="table table-hover">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Concert.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a style="font-weight: bold;" asp-action="Details" asp-route-id="@item.Id">Квитки</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
-                </td>
+                <th>Concert name</th>
+                <th>Sector name</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        @:<tbody>
+    }
 
-<div class="container">
-    <div id="chart2"></div>
-</div>
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Concert.Name)</td>
+        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+        <td>@Html.DisplayFor(modelItem => item.Price) ₴</td>
+        <td>
+            <div class="float-right">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Orders</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+        </td>
+    </tr>
 
-@section scripts {
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    prevSector = item;
+}
 
-    <script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            $.get('/api/Charts/JsonData2', function (jsonData) {
-                data = google.visualization.arrayToDataTable(jsonData, false);
-                var option = {
-                    title: "Ціна за квиток у секторі",
-                    width: 700,
-                    height: 400
-                };
-                chart = new google.visualization.BarChart(document.getElementById('chart2'));
-                chart.draw(data, option);
-            })
-        }
-    </script>
+@{ 
+    @:</tbody>
+    @:</table>
 }

@@ -1,16 +1,15 @@
 ﻿@model WebApplication1.Concerts
 
 @{
-    ViewData["Title"] = "Додати концерт";
+    ViewData["Title"] = "Add concert";
 }
 
-<h1>Додати концерт</h1>
-
-@*<h4>Concerts</h4>*@
+<h3>Add concert</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form class="form-group" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -32,14 +31,12 @@
                 <select asp-for="LocationId" class ="form-control" asp-items="ViewBag.LocationId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Go back</a>
+
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Повернутись</a>
 </div>
 
 @section Scripts {

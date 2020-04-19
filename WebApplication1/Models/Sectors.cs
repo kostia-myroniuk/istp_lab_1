@@ -12,18 +12,18 @@ namespace WebApplication1
         }
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-        [Display(Name = "Сектор")]
+        [Required(ErrorMessage = "Field can't be empty")]
+        [Display(Name = "Sector")]
         public string Name { get; set; }
-        [Display(Name = "Концерт")]
+        [Display(Name = "Concert")]
         public int ConcertId { get; set; }
 
-        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-        [Range(0, 10000, ErrorMessage = "Ціна має знаходитись в діапазоні від 0 до 10000")]
-        [Display(Name = "Ціна")]
-        public decimal Price { get; set; }
+        [Required(ErrorMessage = "Field can't be empty")]
+        [Range(0, 10000, ErrorMessage = "Price has to be an integer value between 0 and 10000")]
+        [Display(Name = "Price")]
+        public int Price { get; set; }
 
-        [Display(Name = "Концерт")]
+        [Display(Name = "Concert")]
         public virtual Concerts Concert { get; set; }
         public virtual ICollection<Tickets> Tickets { get; set; }
     }

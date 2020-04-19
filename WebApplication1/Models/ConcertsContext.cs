@@ -194,7 +194,7 @@ namespace WebApplication1
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Price).HasColumnType("money");
+                entity.Property(e => e.Price).HasColumnType("int");
 
                 entity.HasOne(d => d.Concert)
                     .WithMany(p => p.Sectors)

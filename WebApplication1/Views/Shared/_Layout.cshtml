@@ -1,55 +1,53 @@
 ﻿<!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Концерти</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-pulse.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flatly.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3 sticky-top">
             <div class="container">
-                @*<a class="navbar-brand" asp-area="" asp-controller="Concerts" asp-action="Index">Концерти</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ConcertsMVC</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>*@
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Concerts" asp-action="Index">Концерти</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Sectors" asp-action="Index">Квитки</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Artists" asp-action="Index">Виконавці</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Locations" asp-action="Index">Місця</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Clients" asp-action="Index">Відвідувачі</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Жанри</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Countries" asp-action="Index">Країни</a>
-                        </li>
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Квитки</a>
-        </li>*@
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Statuses" asp-action="Index">Статуси</a>
-        </li>*@
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Concerts" asp-action="Index">Concerts</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Artists" asp-action="Index">Artists</a></li>
+                        <li class="navbar-text ml-2 mr-2">|</li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Sectors" asp-action="Index">Tickets</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Locations" asp-action="Index">Places</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Clients" asp-action="Index">Visitors</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="navbar-text text-muted mr-0">@User.Identity.Name</li>
+                            <li class="nav-item">@*<a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>*@</li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
+                            <li>
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <input type="submit" class="btn btn-danger" value="Log out" />
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link" href="/Account/Login">Log in</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/Account/Register">Register</a></li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
-    </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -58,7 +56,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Агрегатор концертів - <a asp-area="" asp-controller="Home" asp-action="Privacy">Конфіденційність</a>
+            &copy; 2020 - Лабораторна з ІТтаТП за другий семестр - Концерти
+            <a href="@Url.Action("MakeReport","Artists")" class="float-lg-right">Download word report</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -66,4 +65,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
+
+<style>
+    .navbar-nav.nav-item {
+        
+    }
+</style>
+
+
 </html>

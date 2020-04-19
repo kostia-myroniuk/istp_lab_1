@@ -1,13 +1,12 @@
 ﻿@model WebApplication1.Locations
 
 @{
-    ViewData["Title"] = "Редагувати місце";
+    ViewData["Title"] = "Edit place";
 }
 
-<h1>Редагувати місце</h1>
-
-@*<h4>Locations</h4>*@
+<h3>Edit place</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -29,14 +28,11 @@
                 <span asp-validation-for="CityId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Зберегти" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Go back</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Повернутись</a>
 </div>
 
 @section Scripts {

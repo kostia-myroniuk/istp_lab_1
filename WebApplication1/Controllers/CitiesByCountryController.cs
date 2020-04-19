@@ -9,6 +9,7 @@ using WebApplication1;
 
 namespace WebApplication1.Controllers
 {
+    [Route("Cities/[action]")]
     public class CitiesByCountryController : Controller
     {
         private readonly ConcertsContext _context;
@@ -28,11 +29,8 @@ namespace WebApplication1.Controllers
             ViewBag.CountryId = id;
             ViewBag.CountryName = name;
 
-            var citiesByCountry = _context.Cities.Where(c => c.CountryId == id);
+            var citiesByCountry = _context.Cities.Where(c => c.CountryId == id).OrderBy(c => c.Name);
             return View(await citiesByCountry.ToListAsync());
-
-            //var concertsContext = _context.Cities.Include(c => c.Country);
-            //return View(await concertsContext.ToListAsync());
         }
 
         // GET: CitiesByCountry/Details/5
@@ -71,16 +69,16 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Create(int countryId, [Bind("Id,Name")] Cities cities)
         {
             cities.CountryId = countryId;
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !_context.Cities.Any(c => c.CountryId == countryId && c.Name == cities.Name))
             {
                 _context.Add(cities);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index", "Cities", new { id = countryId, name = _context.Countries.Where(c => c.Id == countryId).FirstOrDefault().Name }); 
+                return RedirectToAction("Index", "CitiesByCountry", new { id = countryId, name = _context.Countries.Where(c => c.Id == countryId).FirstOrDefault().Name }); 
             }
             //ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", cities.CountryId);
             //return View(cities);
-            return RedirectToAction("Index", "Cities", new { id = countryId, name = _context.Countries.Where(c => c.Id == countryId).FirstOrDefault().Name });
+            return RedirectToAction("Index", "CitiesByCountry", new { id = countryId, name = _context.Countries.Where(c => c.Id == countryId).FirstOrDefault().Name });
         }
 
         // GET: CitiesByCountry/Edit/5

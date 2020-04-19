@@ -1,15 +1,13 @@
 ﻿@model WebApplication1.Cities
 
 @{
-    ViewData["Title"] = "Видалити місто";
+    ViewData["Title"] = "Delete city";
 }
 
-<h1>Видалити місто?</h1>
+<h3>Delete city</h3>
+<hr/>
 
-@*<h3>Are you sure you want to delete this?</h3>*@
 <div>
-    @*<h4>Cities</h4>*@
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -27,7 +25,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-controller="Countries" asp-action="Index">Повернутись</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-controller="Countries" asp-action="Index" class="btn btn-secondary">Go back</a>
     </form>
 </div>

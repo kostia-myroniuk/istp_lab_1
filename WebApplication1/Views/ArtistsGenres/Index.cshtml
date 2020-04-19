@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h3>@ViewBag.ArtistName genres</h3>
+<hr/>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-artistId="@ViewBag.ArtistId" class="btn btn-success">Add genre</a>
+    <a asp-controller="Artists" asp-action="Index" class="btn btn-secondary">Go back</a>
 </p>
 <table class="table">
     <thead>
@@ -30,10 +32,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Genre.Name)
             </td>
+
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <div class="text-center">
+                    <form asp-action="Delete" asp-route-id="@item.Id" asp-route-artistId="@ViewBag.ArtistId" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
             </td>
         </tr>
 }

@@ -27,7 +27,10 @@ namespace WebApplication1.Controllers
         // GET: Artists
         public async Task<IActionResult> Index()
         {
-            var concertsContext = _context.Artists.Include(a => a.Country);
+            // var concertsContext = _context.Artists.Include(a => a.Country).Include(a => a.ArtistsGenres).ThenInclude(ag => ag.);
+
+            var concertsContext = _context.Artists.Include(a => a.Country).Include(a => a.ArtistsGenres).ThenInclude(ag => ag.Genre);
+
             return View(await concertsContext.ToListAsync());
         }
 

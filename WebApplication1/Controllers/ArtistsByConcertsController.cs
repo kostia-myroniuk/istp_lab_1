@@ -9,6 +9,7 @@ using WebApplication1;
 
 namespace WebApplication1.Controllers
 {
+    [Route("Lineup/[action]")]
     public class ArtistsByConcertsController : Controller
     {
         private readonly ConcertsContext _context;
@@ -28,6 +29,7 @@ namespace WebApplication1.Controllers
             ViewBag.ConcertId = id;
             ViewBag.ConcertName = name;
             var concertsContext = _context.ConcertsArtists.Where(c => c.ConcertId == id).Include(c => c.Artist);
+            //concertsContext.OrderBy(c => c.Artist.Name);
             return View(await concertsContext.ToListAsync());
         }
 
@@ -69,7 +71,7 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Create(int concertId, [Bind("Id,ArtistId")] ConcertsArtists concertsArtists)
         {
             concertsArtists.ConcertId = concertId;
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !_context.ConcertsArtists.Any(ca => ca.ConcertId == concertId && ca.ArtistId == concertsArtists.ArtistId))
             {
                 _context.Add(concertsArtists);
                 await _context.SaveChangesAsync();
@@ -160,12 +162,12 @@ namespace WebApplication1.Controllers
         // POST: ArtistsByConcerts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int concertId)
         {
             var concertsArtists = await _context.ConcertsArtists.FindAsync(id);
             _context.ConcertsArtists.Remove(concertsArtists);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { id = concertId, name = _context.Concerts.Where(c => c.Id == concertId).FirstOrDefault().Name });
         }
 
         private bool ConcertsArtistsExists(int id)

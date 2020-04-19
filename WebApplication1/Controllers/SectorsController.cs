@@ -19,10 +19,25 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Sectors
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var concertsContext = _context.Sectors.Include(s => s.Concert).OrderBy(cc => cc.Concert.Name).ThenBy(cc => cc.Price);
+        //    return View(await concertsContext.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(int? id)
         {
-            var concertsContext = _context.Sectors.Include(s => s.Concert);
-            return View(await concertsContext.ToListAsync());
+            if (id == null)
+            {
+                //return RedirectToAction("Index", "Concerts");
+                var concertsContext = _context.Sectors.Include(s => s.Concert).OrderBy(cc => cc.Concert.Name).ThenBy(cc => cc.Price);
+                return View(await concertsContext.ToListAsync());
+            }
+            else
+            {
+                var concertsContext = _context.Sectors.Where(s => s.ConcertId == id).Include(s => s.Concert).OrderBy(cc => cc.Concert.Name).ThenBy(cc => cc.Price);
+                return View(await concertsContext.ToListAsync());
+            }
         }
 
         // GET: Sectors/Details/5

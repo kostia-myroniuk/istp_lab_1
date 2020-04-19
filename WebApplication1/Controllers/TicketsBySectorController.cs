@@ -9,6 +9,7 @@ using WebApplication1;
 
 namespace WebApplication1.Controllers
 {
+    [Route("Orders/[action]")]
     public class TicketsBySectorController : Controller
     {
         private readonly ConcertsContext _context;
@@ -29,7 +30,7 @@ namespace WebApplication1.Controllers
             ViewBag.SectorId = id;
             ViewBag.SectorName = name;
 
-            var concertsContext = _context.Tickets.Where(t => t.SectorId == id).Include(t => t.Sector).Include(t => t.Status).Include(t => t.Client);
+            var concertsContext = _context.Tickets.Where(t => t.SectorId == id).Include(t => t.Sector).Include(t => t.Status).Include(t => t.Client).Include(t => t.Sector).ThenInclude(t => t.Concert);
             return View(await concertsContext.ToListAsync());
         }
 

@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Countries countries)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !_context.Countries.Any(c => c.Name == countries.Name))
             {
                 _context.Add(countries);
                 await _context.SaveChangesAsync();

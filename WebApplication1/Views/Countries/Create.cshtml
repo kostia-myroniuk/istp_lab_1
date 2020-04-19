@@ -1,12 +1,11 @@
 ﻿@model WebApplication1.Countries
 
 @{
-    ViewData["Title"] = "Додати країну";
+    ViewData["Title"] = "Add country";
 }
 
-<h1>Додати країну</h1>
+<h1>Add country</h1>
 
-@*<h4>Countries</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,15 +17,13 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
+                 <a asp-action="Index" class="btn btn-secondary">Go back</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Повернутись до списку</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

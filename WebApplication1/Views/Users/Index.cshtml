@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication1.Models.User>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h1>Users</h1>
+<hr/>
+<p>
+    <a asp-action="Create" class="btn btn-success">Add user</a>
+    <a asp-controller="Roles" asp-action="Index" class="btn btn-info">Roles</a>
+</p>
+
+<table class="table table-hover">
+    <tr>
+        <th>E-Mail</th>
+        <th>E-Mail confirmed</th>
+        <th>Year</th>
+        <th></th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                @if (user.EmailConfirmed) { <text>Yes</text> }
+                else { <text>No</text> }
+            </td>
+            <td>@user.Year</td>
+            <td>
+                <div class="text-center">
+                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                        <a class="btn btn-sm btn-outline-info" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-sm btn-outline-info" asp-controller="Roles" asp-action="Edit" asp-route-userId="@user.Id">Roles</a>
+                        <a class="btn btn-sm btn-outline-info" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" @((User.Identity.IsAuthenticated && User.Identity.Name == user.Email) ? "disabled" : "")>Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

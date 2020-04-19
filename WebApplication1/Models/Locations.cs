@@ -12,15 +12,15 @@ namespace WebApplication1
         }
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-        [Display(Name = "Назва")]
+        [Required(ErrorMessage = "Field can't be empty")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
-        [Display(Name = "Адреса")]
+        [Display(Name = "Adress")]
         public string Adress { get; set; }
-        [Display(Name = "Місто")]
+        [Display(Name = "City")]
         public int CityId { get; set; }
 
-        [Display(Name = "Місто")]
+        [Display(Name = "City")]
         public virtual Cities City { get; set; }
         public virtual ICollection<Concerts> Concerts { get; set; }
     }

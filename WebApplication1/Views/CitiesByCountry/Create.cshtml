@@ -1,13 +1,12 @@
 ﻿@model WebApplication1.Cities
 
 @{
-    ViewData["Title"] = "Додати місто";
+    ViewData["Title"] = "Add city";
 }
 
-<h1>Додати місто</h1>
-
-@*<h4>Cities</h4>*@
+<h3>Add city</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -22,15 +21,12 @@
                 <label asp-for="CountryId" class="control-label"></label>
                 <select asp-for="CountryId" class ="form-control" asp-items="ViewBag.CountryId"></select>
             </div>*@
-            <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-primary"/>
-            </div>
+        <div class="form-group">
+            <input type="submit" value="Add" class="btn btn-primary" />
+            <a asp-controller="Countries" asp-action="Index" class="btn btn-secondary">Go back</a>
+        </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-controller="Countries" asp-action="Index" >Повернутись</a>
 </div>
 
 @section Scripts {

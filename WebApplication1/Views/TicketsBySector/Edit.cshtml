@@ -1,13 +1,12 @@
 ﻿@model WebApplication1.Tickets
 
 @{
-    ViewData["Title"] = "Редагувати квиток";
+    ViewData["Title"] = "Edit order";
 }
 
-<h1>Редагувати квиток</h1>
-
-@*<h4>Tickets</h4>*@
+<h3>Редагувати квиток</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -29,14 +28,11 @@
                 <span asp-validation-for="StatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Зберегти" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-controller="Sectors" asp-action="Index" class="btn btn-secondary">Go back</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-controller="Sectors" asp-action="Index">Повернутись</a>
 </div>
 
 @section Scripts {

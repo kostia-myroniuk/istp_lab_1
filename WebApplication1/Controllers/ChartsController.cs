@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         {
             var countries = _context.Countries.Include(c => c.Artists).ToList();
             List<object> countriesArtists = new List<object>();
-            countriesArtists.Add(new[] { "Країна", "Кількість виконавців" });
+            countriesArtists.Add(new[] { "Country", "Artist amount" });
             foreach (var c in countries)
             {
                 countriesArtists.Add(new object[] { c.Name, c.Artists.Count() });
@@ -37,7 +37,7 @@ namespace WebApplication1.Controllers
         {
             var sectors = _context.Sectors.Include(c => c.Concert).ToList();
             List<object> sectorsPrices = new List<object>();
-            sectorsPrices.Add(new[] { "Концерт/Сектор", "Вартість" });
+            sectorsPrices.Add(new[] { "Concert/Sector", "Price" });
             foreach (var s in sectors)
             {
                 sectorsPrices.Add(new object[] { s.Concert.Name + " / " + s.Name, s.Price });
@@ -45,6 +45,18 @@ namespace WebApplication1.Controllers
             return new JsonResult(sectorsPrices);
         }
 
+        [HttpGet("JsonData3")]
+        public JsonResult JsonData3()
+        {
+            var genres = _context.Genres.ToList();
+            List<object> genresArtists = new List<object>();
+            genresArtists.Add(new[] { "Genre", "Artist amount" });
+            foreach (var g in genres)
+            {
+                genresArtists.Add(new object[] { g.Name, _context.ArtistsGenres.Where(ag => ag.GenreId == g.Id).Count() });
+            }
+            return new JsonResult(genresArtists);
+        }
 
     }
 }
