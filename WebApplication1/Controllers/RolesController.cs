@@ -71,5 +71,14 @@ namespace WebApplication1.Controllers
 
             return NotFound();
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(string roleId)
+        {
+            IdentityRole role =  await _roleManager.FindByIdAsync(roleId);
+            _roleManager.DeleteAsync(role);
+            return RedirectToAction("Index", "Roles");
+        }
     }
 }
